@@ -6,6 +6,8 @@ import java.util.Stack;
 
 public class RepetitionJudge {
 
+    public static int count = 0;
+
     static class TreeNode {
         TreeNode leftChild;
         TreeNode rightChild;
@@ -21,7 +23,7 @@ public class RepetitionJudge {
      */
     public static TreeNode createBinaryTree(String[] expression) {
 
-        // 存储操作数的栈
+        // 存储操作符的栈
         Stack<String> opStack = new Stack<String>();
         // 存储转换后的逆波兰式的队列
         Queue<String> reversePolish = new LinkedList<String>();
@@ -51,12 +53,12 @@ public class RepetitionJudge {
                             opStack.pop();
                             break;
 
-                        } else{
+                        } else{//栈中离上一个“（”之间的除括号外的操作符入队列
 
                             reversePolish.offer(opStack.pop());
                         }
                     }
-                } else{
+                } else{//处理除括号外的操作符
 
                     while(!opStack.isEmpty()){
                         // 如果栈顶元素为"("直接入栈
@@ -73,6 +75,8 @@ public class RepetitionJudge {
 
                             opStack.push(s);
                             break;
+                        }else{
+                            reversePolish.offer(opStack.pop());
                         }
 
                     }
@@ -115,6 +119,8 @@ public class RepetitionJudge {
         }
 
         return nodeStack.pop();
+
+
     }
 
     /**
@@ -211,8 +217,13 @@ public class RepetitionJudge {
 
     public static void main(String[] args) {
 
-        TreeNode root1 = createBinaryTree(new String[]{"(", "1", "+", "2", ")", "+", "3"});
-        TreeNode root2 = createBinaryTree(new String[]{"(", "3", "+", "2", ")", "+", "1"});
+        TreeNode root1 = createBinaryTree(new String[]{"1", "+", "2", "+", "3"});
+
+        TreeNode root2 = createBinaryTree(new String[]{"3", "+", "2", "+", "1"});
+
+        printMathExpression(root1);
+        printMathExpression(root2);
+
         System.out.println(cmp2(root1,root2));
     }
 
@@ -227,9 +238,22 @@ public class RepetitionJudge {
         }
         if (nodea.value != nodeb.value)
             return false;
+
         return cmp2(nodea.leftChild, nodeb.leftChild) && cmp2(nodea.rightChild, nodeb.rightChild)
                 ||cmp2(nodea.leftChild, nodeb.rightChild) && cmp2(nodea.rightChild, nodeb.leftChild);
 
+    }
+
+    public static boolean cmp3(TreeNode nodea,TreeNode nodeb){
+        if (nodea == null && nodeb == null)
+            return true;
+        else if ((nodea != null) && (nodeb != null)){
+            if (nodea.value == nodeb.value){
+                if ((cmp3(nodea.leftChild,nodeb.rightChild)) && cmp3(nodea.rightChild,nodeb.leftChild) || cmp3(nodea.leftChild,nodeb.leftChild) && cmp3(nodea.rightChild,nodeb.rightChild))
+                    return true;
+            }
+        }
+        return false;
     }
 
 }
