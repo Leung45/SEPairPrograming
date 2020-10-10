@@ -103,7 +103,7 @@ public class StringToRPNImpl {
 
     @Test
     public void testtranrpn(){
-        String s = tran2RPNinString("( " + "2/23" + " + " + "5" + " )" + " * " + "( " + "6" + " - " + "1" + " )");
+        String s = tran2RPNinString("8/7" + " ÷ " + "( " + "5/89" + " * " + "6/33" + " )" + " - " + "3");
         System.out.println(s);
         String[] strings = s.split("\\s+");
         for (String str:strings) {

@@ -1,11 +1,50 @@
 package com.czl.exercisesgeneration.service.myImpl;
 
+import com.czl.exercisesgeneration.RPN.impl.StringToRPNImpl;
+import com.czl.exercisesgeneration.service.impl.Changes;
+
+import com.czl.exercisesgeneration.service.impl.Generation;
 import com.czl.exercisesgeneration.service.impl.Operation;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedWriter;
+import java.util.HashSet;
+import java.util.Set;
+
 public class GenerateExercisesImpl {
 
+    private static Set<String> set = new HashSet<String>();
     private static final String[] on = {" + "," - "," * "," ÷ "};
+
+    /**
+     * 生成题目
+     * @param n 生成题目的个数
+     * @param r 生成题目中值的范围
+     */
+    public static void generateFormulas(int n,int r) throws Exception {
+        BufferedWriter exercises = FileOperationImpl.getFileOutputStream("./Exercises.txt");
+        BufferedWriter answers = FileOperationImpl.getFileOutputStream("./Answers.txt");
+        for (int i = 0; i < n; i++) {
+            while (true){
+                String[] val = getVal(r);
+                String poland = StringToRPNImpl.tran2RPNinString(val[0]);
+                String result = CalculationImpl.calculate(poland);
+                if (set.add(result)){
+                    if (!result.equals("error")){
+                        exercises.write(i+1+". "+val[1]);
+                        exercises.newLine();
+                        answers.write(i+1+". "+result);
+                        answers.newLine();
+                        break;
+                    }
+                }else{
+                    continue;
+                }
+            }
+        }
+        exercises.close();
+        answers.close();
+    }
 
     /**
      * 生成式子

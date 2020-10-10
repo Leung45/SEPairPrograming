@@ -348,7 +348,7 @@ public class CalculationImpl {
 
     @Test
     public void testtimu(){
-        String string = StringToRPNImpl.tran2RPNinString("( " + "8/7" + " ÷ " + "5" + " )" + " * " + "( " + "6" + " - " + "1" + " )");
+        String string = StringToRPNImpl.tran2RPNinString("8/7" +  " ÷ " + "0");
         System.out.println(calculate(string));
     }
 }
