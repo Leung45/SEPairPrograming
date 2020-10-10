@@ -55,8 +55,8 @@ public class CalculationImpl {
                 long a = (w1-w)/w2;
                 //分数部分
                 long reduce = reduce(w,w2);
-                w /= reduce;
-                w2 /= reduce;
+                w = w/reduce;
+                w2 = w2/reduce;
                 if (a==0){
                     return w+"/"+w2;
                 }else {
@@ -348,7 +348,7 @@ public class CalculationImpl {
 
     @Test
     public void testtimu(){
-        String string = StringToRPNImpl.tran2RPNinString("( " + "2" + " + " + "5" + " )" + " * " + "( " + "6" + " - " + "1" + " )");
+        String string = StringToRPNImpl.tran2RPNinString("( " + "8/7" + " ÷ " + "5" + " )" + " * " + "( " + "6" + " - " + "1" + " )");
         System.out.println(calculate(string));
     }
 }

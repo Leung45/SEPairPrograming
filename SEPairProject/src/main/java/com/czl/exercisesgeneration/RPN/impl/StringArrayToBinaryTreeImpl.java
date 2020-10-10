@@ -140,7 +140,7 @@ public class StringArrayToBinaryTreeImpl implements StringArrayToBinaryTree {
      * @return
      */
     public static boolean isOperator(String string) {
-        if ("(".equals(string) || ")".equals(string) || "+".equals(string) || "-".equals(string) || "*".equals(string) || "/".equals(string))
+        if ("(".equals(string) || ")".equals(string) || "+".equals(string) || "-".equals(string) || "*".equals(string) || "÷".equals(string))
             return true;
         else
             return false;
@@ -167,7 +167,7 @@ public class StringArrayToBinaryTreeImpl implements StringArrayToBinaryTree {
     public static int ofPriority(String string) {
         if ("+".equals(string) || "-".equals(string)) 
             return 1;
-        else if ("*".equals(string) || "/".equals(string)) 
+        else if ("*".equals(string) || "÷".equals(string))
             return 2;
         else 
             throw new IllegalArgumentException("The exercises contain some undefined operators.");

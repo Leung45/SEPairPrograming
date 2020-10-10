@@ -1,10 +1,11 @@
 package com.czl.exercisesgeneration.service.myImpl;
 
 import com.czl.exercisesgeneration.service.impl.Operation;
+import org.junit.jupiter.api.Test;
 
 public class GenerateExercisesImpl {
 
-    private static final String[] on = {" + "," - "," x "," ÷ "};
+    private static final String[] on = {" + "," - "," * "," ÷ "};
 
     /**
      * 生成式子
@@ -91,6 +92,13 @@ public class GenerateExercisesImpl {
         return strings;
 
 
+    }
+
+    @Test
+    public void testThis(){
+        String[] strings = getVal(10);
+        System.out.println(strings[0]);
+        System.out.println(strings[1]);
     }
 
 }
