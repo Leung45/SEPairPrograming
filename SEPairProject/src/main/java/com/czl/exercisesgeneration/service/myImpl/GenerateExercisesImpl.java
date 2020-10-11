@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class GenerateExercisesImpl {
 
     private static Set<String> set = new HashSet<String>();
     private static final String[] on = {" + "," - "," * "," ÷ "};
+    private static final String[] bracket = {"( "," )"};
 
     /**
      * 生成题目
@@ -53,22 +55,105 @@ public class GenerateExercisesImpl {
      */
     public static String[] getVal(int p){
 
+        int containBracket = (int) Math.round(Math.random());//1you0wu
+
         String[] s = new String[2];
 
+        int operNum = (int) Math.floor((Math.random()*3)+1.0);//1-3
+
+
         //操作数
-        Operation[] ops = getOps(4,p);
+        Operation[] ops = getOps(operNum+1,p);
 
         //操作符
-        String[] strings = getOpfu(3);
+        String[] strings = getOpfu(operNum);
 
-        int[] n = new int[3];
-        for (int i = 0; i < 3; i++) {
-            n[i] = (int)(Math.random()*4);
+        if (operNum == 1){
+            //假分数形式
+            s[0] = ops[0].getValue()+strings[0]+ops[1].getValue();
+            //正常形式
+            s[1] = ops[0].getStr()+strings[0]+ops[1].getStr();
+        }else {
+            if (containBracket == 1){
+                if (operNum == 3){
+                    int choose = (int) Math.floor(Math.random()*10);
+                    switch (choose){
+                        case 0:
+                            s[0] = bracket[0]+ops[0].getValue()+strings[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+bracket[1]+strings[2]+ops[3].getValue();
+                            s[1] = bracket[0]+ops[0].getStr()+strings[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+bracket[1]+strings[2]+ops[3].getStr();
+                            break;
+                        case 1:
+                            s[0] = ops[0].getValue()+strings[0]+bracket[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+strings[2]+ops[3].getValue()+bracket[1];
+                            s[1] = ops[0].getStr()+strings[0]+bracket[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+strings[2]+ops[3].getStr()+bracket[1];
+                            break;
+                        case 2:
+                            s[0] = bracket[0]+ops[0].getValue()+strings[0]+ops[1].getValue()+bracket[1]+strings[1]+ops[2].getValue()+strings[2]+ops[3].getValue();
+                            s[1] = bracket[0]+ops[0].getStr()+strings[0]+ops[1].getStr()+bracket[1]+strings[1]+ops[2].getStr()+strings[2]+ops[3].getStr();
+                            break;
+                        case 3:
+                            s[0] = ops[0].getValue()+strings[0]+bracket[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+bracket[1]+strings[2]+ops[3].getValue();
+                            s[1] = ops[0].getStr()+strings[0]+bracket[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+bracket[1]+strings[2]+ops[3].getStr();
+                            break;
+                        case 4:
+                            s[0] = ops[0].getValue()+strings[0]+ops[1].getValue()+strings[1]+bracket[0]+ops[2].getValue()+strings[2]+ops[3].getValue()+bracket[1];
+                            s[1] = ops[0].getStr()+strings[0]+ops[1].getStr()+strings[1]+bracket[0]+ops[2].getStr()+strings[2]+ops[3].getStr()+bracket[1];
+                            break;
+                        case 5:
+                            s[0] = bracket[0]+ops[0].getValue()+strings[0]+ops[1].getValue()+bracket[1]+strings[1]+bracket[0]+ops[2].getValue()+strings[2]+ops[3].getValue()+bracket[1];
+                            s[1] = bracket[0]+ops[0].getStr()+strings[0]+ops[1].getStr()+bracket[1]+strings[1]+bracket[0]+ops[2].getStr()+strings[2]+ops[3].getStr()+bracket[1];
+                            break;
+                        case 6:
+                            s[0] = bracket[0]+bracket[0]+ops[0].getValue()+strings[0]+ops[1].getValue()+bracket[1]+strings[1]+ops[2].getValue()+bracket[1]+strings[2]+ops[3].getValue();
+                            s[1] = bracket[0]+bracket[0]+ops[0].getStr()+strings[0]+ops[1].getStr()+bracket[1]+strings[1]+ops[2].getStr()+bracket[1]+strings[2]+ops[3].getStr();
+                            break;
+                        case 7:
+                            s[0] = bracket[0]+ops[0].getValue()+strings[0]+bracket[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+bracket[1]+bracket[1]+strings[2]+ops[3].getValue();
+                            s[1] = bracket[0]+ops[0].getStr()+strings[0]+bracket[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+bracket[1]+bracket[1]+strings[2]+ops[3].getStr();
+                            break;
+                        case 8:
+                            s[0] = ops[0].getValue()+strings[0]+bracket[0]+bracket[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+bracket[1]+strings[2]+ops[3].getValue()+bracket[1];
+                            s[1] = ops[0].getStr()+strings[0]+bracket[0]+bracket[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+bracket[1]+strings[2]+ops[3].getStr()+bracket[1];
+                            break;
+                        case 9:
+                            s[0] = ops[0].getValue()+strings[0]+bracket[0]+ops[1].getValue()+strings[1]+bracket[0]+ops[2].getValue()+strings[2]+ops[3].getValue()+bracket[1]+bracket[1];
+                            s[1] = ops[0].getStr()+strings[0]+bracket[0]+ops[1].getStr()+strings[1]+bracket[0]+ops[2].getStr()+strings[2]+ops[3].getStr()+bracket[1]+bracket[1];
+                            break;
+                    }
+                }else {
+                    int choose = (int) Math.floor(Math.random()*2);
+                    switch (choose){
+                        case 0:
+                            s[0] = bracket[0]+ops[0].getValue()+strings[0]+ops[1].getValue()+bracket[1]+strings[1]+ops[2].getValue();
+                            s[1] = bracket[0]+ops[0].getStr()+strings[0]+ops[1].getStr()+bracket[1]+strings[1]+ops[2].getStr();
+                            break;
+                        case 1:
+                            s[0] = ops[0].getValue()+strings[0]+bracket[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+bracket[1];
+                            s[1] = ops[0].getStr()+strings[0]+bracket[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+bracket[1];
+                            break;
+                    }
+
+                }
+            }else {
+                if (operNum == 3){
+                    //假分数形式
+                    s[0] = ops[0].getValue()+strings[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+strings[2]+ops[3].getValue();
+                    s[1] = ops[0].getStr()+strings[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+strings[2]+ops[3].getStr();
+                }else {
+                    //假分数形式
+                    s[0] = ops[0].getValue()+strings[0]+ops[1].getValue()+strings[1]+ops[2].getValue();
+                    //正常形式
+                    s[1] = ops[0].getStr()+strings[0]+ops[1].getStr()+strings[1]+ops[2].getStr();
+                }
+            }
+
         }
-        //假分数形式
-        s[0] = ops[0].getValue()+strings[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+strings[2]+ops[3].getValue();
-        //正常形式
-        s[1] = ops[0].getStr()+strings[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+strings[2]+ops[3].getStr();
+
+
+
+//        //假分数形式
+//        s[0] = ops[0].getValue()+strings[0]+ops[1].getValue()+strings[1]+ops[2].getValue()+strings[2]+ops[3].getValue();
+//        //正常形式
+//        s[1] = ops[0].getStr()+strings[0]+ops[1].getStr()+strings[1]+ops[2].getStr()+strings[2]+ops[3].getStr();
         return s;
     }
 
@@ -94,6 +179,7 @@ public class GenerateExercisesImpl {
      */
     public static Operation getOp(int n){
         Operation op = new Operation();
+
         int a = (int)(Math.random()*(n)) ;
         if (a == 0){
             a = 1;

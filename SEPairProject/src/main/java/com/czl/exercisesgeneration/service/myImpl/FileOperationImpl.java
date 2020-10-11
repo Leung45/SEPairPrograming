@@ -1,6 +1,7 @@
 package com.czl.exercisesgeneration.service.myImpl;
 
 import com.czl.exercisesgeneration.RPN.impl.StringToRPNImpl;
+import org.junit.jupiter.api.Test;
 
 
 import java.io.*;
@@ -59,10 +60,10 @@ public class FileOperationImpl {
      */
     public static String[] changeFile(String s){
         //去掉序号
-        String[] split = s.split("\\.");
+        String[] split = s.split("\\."+" ");
 
         String[] ps = split[1].split("\\s+");
-        for (int i = 1; i < ps.length; i+=2) {
+        for (int i = 0; i < ps.length; i++) {
             if (ps[i].contains("'")){
                 //es[0]为整数部分 ， es[1]为分数部分
                 String[] es = ps[i].split("'");
@@ -74,7 +75,7 @@ public class FileOperationImpl {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < ps.length; i++) {
+        for (int i = 0; i < ps.length; i++) {
             sb.append(ps[i]+" ");
         }
         split[1] = sb.toString();
@@ -82,6 +83,18 @@ public class FileOperationImpl {
 //        System.out.println(split[1]);
         return split;
 
+    }
+
+    @Test
+    public void testcheckanswer(){
+        String[] strings = changeFile("3. 3 + 2'1/3 * ( 4 - 1 )");
+//        String[] split = strings[1].split("\\s+");
+
+        System.out.println(strings[0]);
+        System.out.println(strings[1]);
+//        for (String str:split) {
+//            System.out.println(str);
+//        }
     }
 
     /**
@@ -144,6 +157,7 @@ public class FileOperationImpl {
         answer.close();
         grade.close();
     }
+
 
 
 }

@@ -252,7 +252,7 @@ public class CalculationImpl {
      * @return
      */
     public static String div ( String e1 , String e2){
-        if (e1 == null || e2 == null) return "error";
+        if (e1 == null || e2 == null || e2.equals("0")) return "error";
         if (e1.contains("/")){
             String[] e1s = e1.split("/");
             int e1z = Integer.parseInt(e1s[0]);
