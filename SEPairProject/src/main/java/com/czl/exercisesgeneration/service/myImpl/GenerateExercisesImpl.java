@@ -1,5 +1,9 @@
 package com.czl.exercisesgeneration.service.myImpl;
 
+import com.czl.exercisesgeneration.RPN.BinaryTreeNode;
+import com.czl.exercisesgeneration.RPN.StringArrayToBinaryTree;
+import com.czl.exercisesgeneration.RPN.impl.RepetitionJudgeImpl;
+import com.czl.exercisesgeneration.RPN.impl.StringArrayToBinaryTreeImpl;
 import com.czl.exercisesgeneration.RPN.impl.StringToRPNImpl;
 import com.czl.exercisesgeneration.service.impl.Changes;
 
@@ -8,15 +12,31 @@ import com.czl.exercisesgeneration.service.impl.Operation;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class GenerateExercisesImpl {
 
     private static Set<String> set = new HashSet<String>();
+    private static LinkedList<String> exerciseList = new LinkedList<String>();
+    private static HashMap<String,String> exerciseMap = new HashMap<String,String>();
     private static final String[] on = {" + "," - "," * "," ÷ "};
     private static final String[] bracket = {"( "," )"};
+
+    /**
+     *
+     * @param map
+     * @param value
+     * @return
+     */
+    public static ArrayList<String> getKey(Map<String,String> map, String value){
+        ArrayList<String> keyList = new ArrayList<>();
+        for(String key: map.keySet()){
+            if(map.get(key).equals(value)){
+                keyList.add(key);
+            }
+        }
+        return keyList;
+    }
 
     /**
      * 生成题目
@@ -26,22 +46,48 @@ public class GenerateExercisesImpl {
     public static void generateFormulas(int n,int r) throws Exception {
         BufferedWriter exercises = FileOperationImpl.getFileOutputStream("./Exercises.txt");
         BufferedWriter answers = FileOperationImpl.getFileOutputStream("./Answers.txt");
+
+
+
         for (int i = 0; i < n; i++) {
+            loop:
             while (true){
                 String[] val = getVal(r);
                 String poland = StringToRPNImpl.tran2RPNinString(val[0]);
                 String result = CalculationImpl.calculate(poland);
-                if (set.add(result)){
-                    if (!result.equals("error")){
-                        exercises.write(i+1+". "+val[1]);
-                        exercises.newLine();
-                        answers.write(i+1+". "+result);
-                        answers.newLine();
-                        break;
-                    }
-                }else{
+
+                if (result.equals("error")){
                     continue;
                 }
+
+                if (exerciseMap.containsValue(result)){
+                    ArrayList<String> arrayList = getKey(exerciseMap,result);
+                    BinaryTreeNode treeNode = StringArrayToBinaryTreeImpl.tran2BinaryTree(val[0]);
+                    for ( String exercisedange : arrayList ) {
+                        if (RepetitionJudgeImpl.isRepetitive(treeNode,StringArrayToBinaryTreeImpl.tran2BinaryTree(exercisedange))){
+
+                            continue loop;
+                        }
+                    }
+                }
+                exerciseMap.put(val[0],result);
+                exercises.write(i+1+". "+val[1]);
+                exercises.newLine();
+                answers.write(i+1+". "+result);
+                answers.newLine();
+                break;
+
+//                if (set.add(result)){
+//                    if (!result.equals("error")){
+//                        exercises.write(i+1+". "+val[1]);
+//                        exercises.newLine();
+//                        answers.write(i+1+". "+result);
+//                        answers.newLine();
+//                        break;
+//                    }
+//                }else{
+//                    continue;
+//                }
             }
         }
         exercises.close();
