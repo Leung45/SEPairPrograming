@@ -1,11 +1,14 @@
-package com.czl.exercisesgeneration.RPN;
+package com.czl.exercisesgeneration.relevantclass;
 
 /**
  * 二叉树结点类
  */
 public class BinaryTreeNode {
+    //结点值
     private String value;
+    //左结点
     private BinaryTreeNode lNode;
+    //右结点
     private BinaryTreeNode rNode;
 
     public BinaryTreeNode() {

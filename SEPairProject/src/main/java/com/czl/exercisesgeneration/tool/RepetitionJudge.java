@@ -1,9 +1,11 @@
-package com.czl.exercisesgeneration.RPN.impl;
+package com.czl.exercisesgeneration.tool;
 
-import com.czl.exercisesgeneration.RPN.BinaryTreeNode;
-import com.czl.exercisesgeneration.RPN.RepetitionJudge;
+import com.czl.exercisesgeneration.relevantclass.BinaryTreeNode;
 
-public class RepetitionJudgeImpl{
+/**
+ * 判断重复题目类
+ */
+public class RepetitionJudge{
 
     /**
      * 利用树的同构原理，判断两棵树是否同构，即两个题目是否重复
